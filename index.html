@@ -7,30 +7,52 @@
 </head>
 
 <body>
-<textarea id="editor" rows="30" cols="80">
+    <textarea id="editor" rows="30" cols="80">
 // You can edit this code!
 // Click here and start typing.
 package main
 
 import "fmt"
 
+func fibonacci(c, quit chan int) {
+	x, y := 0, 1
+	for {
+		select {
+		case c <- x:
+			x, y = y, x+y
+		case <-quit:
+			fmt.Println("quit!")
+			return
+		}
+	}
+}
+
 func main() {
-    fmt.Println("Hello, 世界")
+	c := make(chan int)
+	quit := make(chan int)
+	go func() {
+		for i := 0; i < 12; i++ {
+			fmt.Println(<-c)
+		}
+		quit <- 0
+	}()
+	
+	fibonacci(c, quit)
 }
 </textarea>
 
-<div>
-    <button id="run">Run</button>
-</div>
+    <div>
+        <button id="run">Run</button>
+    </div>
 
-Compile Error:
-<pre id="compile_err"></pre>
+    stdout:
+    <pre id="out"></pre>
 
-stderr:
-<pre id="err"></pre>
+    stderr:
+    <pre id="err"></pre>
 
-stdout:
-<pre id="out"></pre>
+    Compile Error:
+    <pre id="compile_err"></pre>
 
     <script type="module">
         import init, { run_zip_and_string } from "./pkg/goscript_playgound.js";
@@ -40,14 +62,14 @@ stdout:
         const arrayBuffer = await res.arrayBuffer();
         const zip = new Uint8Array(arrayBuffer);
 
-        document.getElementById('run').addEventListener('click', async() => {
+        document.getElementById('run').addEventListener('click', async () => {
             const code = document.getElementById('editor').value;
-            console.log(code);
             const result = await run_zip_and_string(zip, code);
-            console.log(result);
+            //console.log(result);
             document.getElementById('compile_err').textContent = result.compile_err;
             document.getElementById('err').textContent = result.err;
             document.getElementById('out').textContent = result.out;
+            //document.getElementById('debug').textContent = result.debug;
         });
     </script>
 </body>
