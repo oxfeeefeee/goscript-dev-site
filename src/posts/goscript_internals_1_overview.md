@@ -184,4 +184,4 @@ This is what happens when the VM execute the code:
 
 So far, there is almost nothing specifically about Goscript, pretty much the same thing happens in Python, Lua or even Java, though there are a few differences: Python or Lua doesn't have a type checker, and Java has a much more complicated VM.
 
-The next article will be a deep-dive into Goscript's VM, to explain how various of Go features are implemented in a simple VM, which, unlike to other parts of the project, is a relatively new wheel that got invented.
+The next article will be a deep-dive into Goscript's VM, to explain how various of Go features are implemented in a simple VM, which, unlike to other parts of the project, is a relatively original wheel that got invented.
