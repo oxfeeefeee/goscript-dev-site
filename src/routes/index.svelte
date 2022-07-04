@@ -1,12 +1,10 @@
-
 <script>
-  import { onMount } from 'svelte';
-  import init, { run_zip_and_string } from '../lib/goscript_playgound';
+  import { onMount } from "svelte";
+  import init, { run_zip_and_string } from "../lib/goscript_playgound";
 
   let zip, compile_err, err, out;
 
-  let code =
-`// You can edit this code!
+  let code = `// You can edit this code!
 // Click here and start typing.
 package main
 
@@ -39,9 +37,9 @@ func main() {
 }`;
 
   // only run on client-side
-  onMount(async() => {
-    await init('/goscript_playgound_bg.wasm');
-    const res = await fetch('/std.zip');
+  onMount(async () => {
+    await init("/goscript_playgound_bg.wasm");
+    const res = await fetch("/std.zip");
     const arrayBuffer = await res.arrayBuffer();
     zip = new Uint8Array(arrayBuffer);
   });
@@ -57,7 +55,7 @@ func main() {
 
 <h1>Playgound</h1>
 
-<textarea bind:value={code} rows="32" cols="80"></textarea>
+<textarea bind:value={code} rows="32" cols="80" />
 
 <div>
   <button on:click={run}>Run</button>

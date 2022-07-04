@@ -1,11 +1,14 @@
-# Goscript 设计原理: 总览
+---
+title: Goscript 设计原理1 -- 总览
+date: 2022-07-04
+excerpt: Goscript是一个用Rust写的,基于虚拟机的Go语言标准实现。Goscript设计原理系列文章的目标是说明其工作机制。
+---
 
 ## 简介
 
 Goscript是一个用Rust写的,基于虚拟机的Go语言标准实现。Goscript设计原理系列文章的目标是说明其工作机制。目标读者是任何有兴趣了解Goscipt如何工作的人，或者更宽泛地说，任何对编译器，脚本语言，或者Go语言可以如何实现有兴趣的人。具备编译器/Rust/Go相关的背景知识肯定会有助于理解，但不是必须的。同时，对于专家来说，很可能就不值一看了。
 
 开始之前，我们给各个子项目列个表：
-Before we dive in, let's make a table of all the sub-projects:
 | 项目 |            简介 | 编程语言 | 创作方 |
 | ----------- |         ----------- | ------ |  ------ |
 | Parser | 解析器，从源代码到AST | Rust | 移植自官方Go版本 |
@@ -40,7 +43,7 @@ func main() {
     ```
 
 - 手写的 [递归下降](https://en.wikipedia.org/wiki/Recursive_descent_parser) 解析器 ([parser.rs](https://github.com/oxfeeefeee/goscript/blob/master/parser/src/parser.rs)) 将token流变成语法树. 这一步可能看起来有点黑魔法，但是实际上非常直白：它就是这样一个递归程序：通过匹配当前遇到的token和预期的token，来递归的生成各种代表语句或者表达式的节点。AST的定义在这里 ([ast.rs](https://github.com/oxfeeefeee/goscript/blob/master/parser/src/ast.rs)). 上面小程序的AST大概长这样:
-    ![ast](../img/ast.jpeg)
+    ![ast](../src/img/ast.jpeg)
 
 ### 类型检查器
 

@@ -1,5 +1,5 @@
 import sveltePreprocess from 'svelte-preprocess';
-import node from '@sveltejs/adapter-node';
+//import node from '@sveltejs/adapter-node';
 import static_adapter from '@sveltejs/adapter-static';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -11,14 +11,14 @@ const config = {
 		// By default, `npm run build` will create a standard Node app.
 		// You can create optimized builds for different platforms by
 		// specifying a different adapter
-		adapter: node(),
-		//adapter: static_adapter(),
+		//adapter: node(),
+		adapter: static_adapter(),
 
 		// Comment out the paths if wants to run in dev mode.
-		//paths: {
-		//	base: '/goscript-dev-site',
-		//	assets: '/goscript-dev-site'
-		//},
+		paths: {
+			base: '/goscript-dev-site',
+			assets: '/goscript-dev-site'
+		},
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		// target: '#svelte',

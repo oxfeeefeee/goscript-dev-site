@@ -1,5 +1,5 @@
 {
-	"name": "svelte-kit-blog-demo",
+	"name": "goscript-dev-site",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "svelte-kit dev",

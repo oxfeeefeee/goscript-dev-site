@@ -1,12 +1,16 @@
-# Goscript Internals: Overview
+---
+title: Goscript Internals I   -- Overview
+date: 2022-07-04
+excerpt: Goscript is a VM-based Golang implementation written in Rust. Goscript Internals will be a series of articles explaining Goscript's design.
+---
 
 ## Introduction
 
 Goscript is a VM-based Golang implementation written in Rust. Goscript Internals will be a series of articles explaining Goscript's design. The intended audience are any experienced programmers who are interested in how Goscipt works--or, more generally--how a compiler/ a scripting language/ a Go implementation works. You don't need to have a background in compilers, Go or Rust but it does help if you do. This first article is a brief introduction of how a typed scripting language works, which may be boring to experts.
 
 Before we dive in, let's make a table of all the sub-projects:
-| Project |            Description | Language | Credit |
-| ----------- |         ----------- | ------ |  ------ |
+| Project |                 Description | Language | Credit |
+| ------- |--------------------------- | ------ |  ------ |
 | Parser | turns source into AST | Rust | ported from Official Go |
 | Type Checker | type deduction and more  | Rust | ported from Official Go |
 | Codegen | turns AST into bytecode | Rust | original work
@@ -39,7 +43,7 @@ The parser read the source code and turns it into an AST ([Abstract Syntax Tree]
     ```
 
 - A hand-written [recursive decendent](https://en.wikipedia.org/wiki/Recursive_descent_parser) parser ([parser.rs](https://github.com/oxfeeefeee/goscript/blob/master/parser/src/parser.rs)) turns the list of tokens into a tree. This step might look magical, but in fact quite intuitive, it's just a recursive program, that try to build nodes of different types of statements and expressions, by matching the tokens it sees and the tokens it expects. The tree definition can be found here ([ast.rs](https://github.com/oxfeeefeee/goscript/blob/master/parser/src/ast.rs)). The AST of the above program would be something like this:
-    ![ast](../img/ast.jpeg)
+    ![ast](../src/img/ast.jpeg)
 
 ### The type checker
 
