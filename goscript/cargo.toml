@@ -1,0 +1,17 @@
+[package]
+name = "goscript-playgound"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+getrandom = { version = "0.2", features = ["js"] }
+wasm-bindgen = "0.2"
+
+
+[dependencies.goscript-engine]
+path = "../../goscript/engine"
+version = "0.1.0" 
+features = ["run_zip"]

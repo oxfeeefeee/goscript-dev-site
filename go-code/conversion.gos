@@ -1,0 +1,115 @@
+package main
+
+import "fmt"
+
+type type1 []struct {
+    Field1 string
+    Field2 int
+}
+type type2 []struct {
+    Field1 string
+    Field2 int
+}
+
+
+func main() {
+    
+    i := uint(42.0)
+    f := float64(i)
+    u := uint(f)
+    assert(u == 42)
+    
+    {
+        f2 := float64(-3.25)
+        assert(f2 == -3.25)
+        f3 := float32(f2)
+        assert(f3 == -3.25)
+        i := int(f3)
+        assert(i == -3)
+    }
+    
+    t1 := type1{{"A", 1}, {"B", 2}}
+    t2 := type2(t1)
+    assert(t2[1].Field2 == 2)
+    
+
+    s1 := string(100)
+    assert(s1 == "d")
+    fmt.Println(s1)
+
+    s2 := string([]rune{100, 101})
+    assert(s2 == "de")
+    fmt.Println(s2)
+
+    data := []byte{'t','e','s','t'}
+    s3 := string(data)
+    assert(s3 == "test")
+    fmt.Println(s3)
+
+    b4 := []byte("dHello, 世界")
+    r4 := []rune("dHello, 世界")
+    assert(b4[0] == 100)
+    assert(r4[0] == 100)
+    s51 := string(b4)
+    s52 := string(r4)
+    assert(s51[0] == 'd')
+    assert(s52[0] == 'd')
+    shijie := "世界"
+    assert(s51[8] == shijie[0])
+    assert(s52[9] == shijie[1])
+    fmt.Println(b4, r4, s51, s52)
+
+
+    
+    testNamed()
+    testStruct()
+    testChan()
+}
+
+
+type Duration int64
+
+func testNamed() {
+    var minDuration Duration
+    var i int32 = 4
+	d :=  Duration(i) + minDuration
+    j := Duration(i)
+    assert(j==d)
+} 
+
+type Person struct {
+	Name    string
+	Address *struct {
+		Street string
+		City   string
+	}
+}
+
+var data struct {
+	Name    string `json:"name"`
+	Address *struct {
+		Street string `json:"street"`
+		City   string `json:"city"`
+	} `json:"address"`
+}
+
+
+func testStruct() {
+    var p Person = Person(data)
+
+    var person = (*Person)(&data)  // ignoring tags, the underlying types are identical
+    assert(person != nil)
+    person.Name = "aaaa"
+    assert(data.Name == "aaaa")
+
+    assert(p.Name == "")
+    fmt.Println(p)
+} 
+
+type C chan string
+
+func testChan() {
+   var c C = make(C)
+   d := (chan <- string)(c)
+   fmt.Println(d)
+} 

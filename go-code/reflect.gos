@@ -1,0 +1,250 @@
+package main
+
+import (
+    "fmt"
+    "reflect"
+)
+
+
+type AAA int
+
+var i = 222
+
+type Bbb struct {
+    A string
+    B int
+    C int
+    D bool
+}
+
+type Ccc struct {
+    I int
+    I8 int8
+    I16 int16
+    I32 int32
+    I64 int64
+    U uint
+    U8 uint8
+    U16 uint16
+    U32 uint32
+    U64 uint64
+    F32 float32
+    F64 float64
+}
+
+func get() AAA {
+    return AAA(i)
+}
+
+
+func get2() AAA {
+    return AAA(6*3)
+}
+
+func testBytes() {
+    a := []byte{111,112,113}
+    v := reflect.ValueOf(a);
+    b := v.Bytes()
+    assert(a[0] == b[0])
+    assert(a[1] == b[1])
+    assert(a[2] == b[2])
+}
+
+func testValueElem() {
+    t := 8
+    i := &t
+    v := reflect.ValueOf(i)
+    re := v.Elem()
+    fmt.Println(v, re)
+}
+
+func testField() {
+    b := Bbb{"xxx", 123, 0, false}
+    v := reflect.ValueOf(b)
+    assert(v.NumField() == 4)
+   // assert(v.Field(1).Int() == 123)
+    fmt.Println(v, v.Field(1).Int())
+}
+
+func testVals() {
+    var i int16 = 555
+    assert(reflect.ValueOf(i).Int() == 555)
+
+    var j uint32 = 666
+    assert(reflect.ValueOf(j).Uint() == 666)
+
+    var k float32 = 3.5
+    assert(reflect.ValueOf(k).Float() == 3.5)
+}
+
+func testIndex() {
+    a := []int{23,34,56}
+    v := reflect.ValueOf(a)  
+    assert(v.Index(1).Int() == 34)
+
+    b := "abcd"
+    v = reflect.ValueOf(b)  
+    assert(v.Index(1).Uint() == 'b')
+
+    c := [3]int{23,34,56}
+    v = reflect.ValueOf(c)  
+    assert(v.Index(2).Int() == 56)
+    
+}
+
+func testIsNil() {
+    var m map[int]string
+    var s []string
+    assert(reflect.ValueOf(m).IsNil())
+    assert(reflect.ValueOf(s).IsNil())
+}
+
+
+func testIsValid() {
+    var m map[int]string
+    v := reflect.ValueOf(m)
+    var v1 reflect.Value
+    assert(v.IsValid())
+    assert(!v1.IsValid())
+}
+
+func testLen() {
+    m := map[int]string{1:"a"}
+    var s []int
+    v := reflect.ValueOf(m)
+    v1 := reflect.ValueOf(s)
+    assert(v.Len() == 1)
+    assert(v1.Len() == 0)
+}
+
+func testMapIter() {
+    m := map[int]string{66:"a"}
+    v := reflect.ValueOf(m)
+    iter := v.MapRange()
+    assert(iter.Next())
+    assert(iter.Key().Int() == 66)
+    assert(!iter.Next())
+}
+
+func testPointer() {
+    var i uintptr
+	i <<= 1
+	i += 1
+	i <<= 3
+	var j int
+	j = 9
+	i = (uintptr)(j)
+    f := float32(i)
+    assert(f == 9)
+
+    fmt.Println(reflect.ValueOf(i).Pointer())
+}
+
+func testSet() {
+    assert(!reflect.ValueOf("").CanSet())
+
+    var bbb Bbb
+    bv := reflect.ValueOf(bbb);
+    bv0 := bv.Field(0)
+    bv2 := bv.Field(2)    
+    bv3 := bv.Field(3)    
+    assert(bv0.CanSet())
+    assert(bv2.CanSet())
+    assert(bv3.CanSet())
+    assert(!bv3.Bool())
+    bv3.SetBool(true)
+    assert(bv3.Bool())
+    
+    a := []int{23,34,56}
+    v := reflect.ValueOf(a)   
+    v1 := v.Index(1)
+    assert(v1.CanSet())
+    
+    v1.Set(reflect.ValueOf(888))
+    assert(v.Index(1).Int() == 888)
+
+    bv0.SetString("kkk")
+    assert(bbb.A == "")
+    
+    {
+        b := new([]byte)
+        v := reflect.ValueOf(b).Elem()
+        v.SetBytes([]byte{1,239,3})
+        assert((*b)[1] == 239)
+    }
+
+    {/*
+        native := ffi(ffiReflect, "reflect")
+        i := 1
+        j := 2
+        pi := native.value_of(i)
+        ppi := native.value_of(pi)
+        pj := native.value_of(j)
+        native.set_pointer(ppi, pj)
+    */
+    }
+
+    {
+        var ccc Ccc
+        v := reflect.ValueOf(ccc);
+        for i := 0; i < 5; i++ {
+            cf := v.Field(i)
+            cf.SetInt(8)
+            assert(cf.Int() == 8)
+        }
+        for i := 5; i < 10; i++ {
+            cf := v.Field(i)
+            cf.SetUint(9)
+            assert(cf.Uint() == 9)
+        }
+        for i := 10; i < 12; i++ {
+            cf := v.Field(i)
+            cf.SetFloat(10)
+            assert(cf.Float() == 10)
+        }
+        
+        var i interface{} = ccc.I16
+        _, ok := i.(int16)
+        assert(ok)
+        i = ccc.U32
+        _, ok = i.(uint32)
+        assert(ok)
+        i = ccc.F32
+        _, ok = i.(float32)
+        assert(ok)
+    }
+
+}
+
+
+func main() {
+    
+    testBytes()
+    
+    testValueElem()
+    
+    testField()
+
+    testVals()
+
+    testIndex()
+
+    testIsNil()
+
+    testIsValid()
+
+    testLen()
+
+    testMapIter()
+    
+    testPointer()
+    
+    testSet() 
+
+    
+    //i := reflect.TypeOf(get)
+    //j := reflect.TypeOf(get2)
+    //assert(i == j)
+    //fmt.Println(get2(), get(), i, j, i == j, reflect.ValueOf(get).Pointer())
+    
+}

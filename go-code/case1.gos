@@ -1,0 +1,30 @@
+package main
+
+
+import "fmt"
+import "unsafe"
+
+
+
+type geometry interface {
+    area() int
+    perim() int
+}
+
+func a() []int {
+    a1 := []int{3}
+    a2 := a1[1:]
+    return a2
+}
+
+
+
+func main() {
+   
+   //var n = ffi(geometry, "test", 1, 2, 3, "haha", 5)
+   //var i = n.area()
+   //assert(i == 666)
+    var p unsafe.Pointer
+    fmt.Println(p, 666)
+  
+}

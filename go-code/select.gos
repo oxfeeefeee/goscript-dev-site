@@ -1,0 +1,65 @@
+package main
+
+import "fmt"
+
+func fibonacci(c, quit chan int) {
+	x, y := 0, 1
+	var s = make([]int, 2)
+	for {
+		select {
+		case c <- x:
+			x, y = y, x+y
+		case s[0] = <-quit:
+			assert(s[0] == 999)
+			fmt.Println("quit 拉", s)
+			return
+		}
+	}
+}
+
+func main() {
+	c := make(chan int)
+	quit := make(chan int)
+	go func() {
+		for i := 0; i < 12; i++ {
+			fmt.Println(<-c)
+		}
+		quit <- 999
+	}()
+	
+	fibonacci(c, quit)
+
+
+	var f = false
+
+	go func() {
+		quit <- 888
+	}()
+
+	select {
+	case v, ok := <- c:
+		assert(f)
+		fmt.Println("c recv:", v, ok)
+	case v, ok := <-quit:
+		assert(v == 888)
+		assert(ok)
+		fmt.Println("quit recv:", v, ok)
+	}	
+
+	go func() {
+		close(c)
+	}()
+
+	select {
+	case v, ok := <- c:
+		assert(v == 0)
+		assert(!ok)
+		fmt.Println("c recv:", v, ok)
+		break
+		assert(f)
+	case v, ok := <-quit:
+		assert(f)
+		fmt.Println("222 quit recv:", v, ok)
+
+	}	
+}

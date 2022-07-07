@@ -1,0 +1,133 @@
+package main
+
+//import "math"
+
+type Node struct{
+    i int
+    j string
+}
+
+var pkgVarA = 1
+
+func test() {
+    a := 1
+    b := &a
+    *b = 2
+    assert(2 == a)
+
+    f := func() *int {
+        return &a
+    }
+
+    d := f()
+    e := *d
+    assert(a == e)
+
+    var n, n2 Node
+    n.i = 1
+    n2.i = 222
+    m := &n
+    *m = n2
+    assert(n.i == 222)
+    assert(m.i == 222)
+    m.i = 333
+    m.j = "abc"
+    assert(n.i == 333)
+    assert(n.j == "abc")
+
+    pfield := &n.i
+    *pfield += 1
+    assert(n.i == 334)
+
+    sl1 := []int{1,2}
+    sl2 := sl1
+    assert(sl2[0] == 1) 
+    i := 3
+    psl := &sl2[i-3]
+    *psl = 3
+    assert(sl1[0] == 3) 
+
+    *psl += 2
+    assert(sl1[0] == 5) 
+
+    sl1p := &sl1
+    (*sl1p)[0] = 8
+    assert(sl1[0] == 8)
+
+    *sl1p = []int{111,222}
+    assert(sl1[0] == 111)
+    assert(sl1[1] == 222)
+
+    {
+        sl1 := [2]int{1,2}
+        sl2 := sl1
+        assert(sl2[0] == 1) 
+        i := 3
+        psl := &sl2[i-3]
+        *psl = 3
+        assert(sl1[0] == 1) 
+        assert(sl2[0] == 3) 
+
+        *psl += 2
+        assert(sl2[0] == 5) 
+
+        sl1p := &sl1
+        (*sl1p)[0] = 8
+        assert(sl1[0] == 8)
+
+        *sl1p = [2]int{111,222}
+        assert(sl1[0] == 111)
+        assert(sl1[1] == 222)
+
+    }
+
+    var m1 = map[int]int{1:2, 3: 888}
+    m1p := &m1
+    (*m1p)[3] = 88
+    assert(m1[3] == 88)
+
+    {
+        var d = &pkgVarA
+        *d = 2
+        assert(pkgVarA == 2)
+
+        /*
+        var e = &math.PI
+        assert(math.V1 == 1)
+        *e = 2
+        assert(math.V1 == 2)
+        */
+    }
+}
+
+
+func ret() *int {
+    i := 666
+    return &i
+}
+
+
+func ret2() (*int, *int) {
+    i := 666
+    return &i, &i
+}
+
+
+func test_ret2() {
+    i, j := ret2()
+    *i = 888
+    assert(*j == 888)
+}
+
+
+func main() {
+    a := 1
+    b := &a
+    assert(*b + 1 == 2)
+
+    assert(*ret() + 1 == 667)
+
+    test()
+
+    test_ret2()
+}

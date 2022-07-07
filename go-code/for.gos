@@ -1,0 +1,274 @@
+package main
+
+
+import "fmt"
+
+
+func f1() {
+    var j int
+    var s = map[int]int{123:10, 258:20}
+    var s2 = map[int]int{1:100, 2:200}
+    for _, v := range s {
+        j += v
+        for _, v2 := range s2{
+            j += v2
+            for _, v := range s {
+                j += v
+            }
+        }
+    }
+    assert(j == 750)
+}
+
+
+func f2() {
+    j := 0
+    for i := 0; i < 1000; i++ {
+        j += 1
+    }
+    assert(j == 1000)
+}
+
+
+func f3() {
+    i := 0
+    i += 'a'
+    i += 'b'
+    i += 'c'
+    i += 'd'
+    var j, k, j2, k2 int
+    for _, c := range "abcd" {
+        j += int(c)
+    }
+    for i := range "abcd" {
+        k += i
+    }
+    for i, c := range "abcd" {
+        j2 += int(c)
+        k2 += i
+    }
+
+    assert(i == j)
+    assert(6 == k)
+    assert(j2 == j)
+    assert(k2 == k)
+}
+
+
+func range_set() {
+    s := []int{1, 2}
+    for i, _ := range s {
+        s[i] = 5
+    }
+    assert(s[0] == 5)
+
+    var s1 = map[int]int{1:2, 3: 888}
+    for i, _ := range s1 {
+        s1[i] = 100
+    }
+    assert(s1[0] == 0)
+    assert(s1[1] == 100)
+}
+
+func break_cont() {
+    j := 0
+    for i := 0; i < 1000; i++ {
+        if i >= 10 {
+            break
+        }
+        j += 1
+    }
+    assert(j == 10)
+
+    j = 0
+    for i := 0; i < 10; i++ {
+        j += 1
+        if i >= 6 {
+            continue
+        }
+        j -= 1
+    }
+    assert(j == 4)
+}
+
+func break_cont_2() {
+    j := 0
+    s := []int{3,3,3,3,3}
+    for i, r := range s {
+        if i >= 4 {
+            break
+        }
+        j += r
+    }
+    assert(j == 3 * 4)
+
+    j = 0
+    k := 0
+    for i, r := range s {
+        k = i
+        if i >= 2 {
+            continue
+        }
+        j += r
+    }
+    assert(j == 3 * 2)
+    assert(k == 4)
+
+}
+
+func break_cont_3() {
+    j := 0
+    for i := 0; i < 100; {
+        i += 1
+        if i >= 10 {
+            continue
+        }
+        j += 1
+    }
+    assert(j == 10 - 1)
+
+
+    j = 0
+    a, b := 60, 80
+    for i := 0; i < 100000; i++ {
+        j += 1
+        if i >= a {
+            if i >= b {
+                break
+            }
+            continue   
+        }
+        j -= 1
+    }
+    assert(j == b - a + 1)
+}
+
+
+func break_label() {
+    total := 0
+OuterLoop:
+    for i := 0; i < 10; i++ {
+        for j := 0; j < 10; j++ {
+            total += 1
+            if j == 5 {
+                break OuterLoop
+            }
+        }
+    }
+    fmt.Println(total)
+    assert(total == 6)
+
+
+    total = 0
+OuterLoop2:
+    for i := 0; i < 10; i++ {
+        for j := 0; j < 10; j++ {
+            total += 1
+            if j == 5 {
+                continue OuterLoop2
+            }
+        }
+    }
+    fmt.Println(total)
+    assert(total == 60)
+
+    total = 0
+    for i := 0; i < 10; i++ {
+        for j := 0; j < 10; j++ {
+            total += 1
+            if j == 5 {
+                break
+            }
+        }
+    }
+    fmt.Println(total)
+    assert(total == 60)
+
+    total = 0
+    for i := 0; i < 10; i++ {
+        for j := 0; j < 10; j++ {
+            total += 1
+            if j == 5 {
+                continue
+            }
+        }
+    }
+    fmt.Println(total)
+    assert(total == 100)
+}
+
+func break_select() {
+    quit := make(chan int, 1)
+    total := 0
+
+    quit <- 888
+
+FOR1:
+    for i := 0; i < 10; i++ {
+        total += 3
+        select {
+        case v, ok := <-quit:
+            assert(v == 888)
+            assert(ok)
+            fmt.Println("quit recv:", v, ok)
+            break 
+        default:
+            fmt.Println("default")
+            break FOR1
+        }	
+    }
+    assert(total == 2 * 3)
+}
+
+func break_switch() {
+    total := 0
+
+FOR1:
+    for i := 0; i < 10; i++ {
+        total += 3
+        switch total {
+        case 3:
+            assert(total == 3)
+            fmt.Println("case 3")
+            break 
+        case 106:
+            assert(total == 106)
+            fmt.Println("case 106")
+            continue
+        default:
+            fmt.Println("default")
+            break FOR1
+        }	
+        total += 100
+    }
+    assert(total == 109)
+}
+
+func range_array() {
+    s2 := [3]string{"a", "b", "c"}
+    t := ""
+    for _, s := range s2 {
+        t += s
+    }
+    assert(t == "abc")
+}
+
+
+func main() {
+   f1()
+   f2()
+   f3()
+
+   range_set()
+
+   range_array()
+
+   break_cont()
+   break_cont_2()
+
+    break_label() 
+    
+    break_select()
+
+    break_switch()
+}

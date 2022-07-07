@@ -1,0 +1,65 @@
+package main
+
+import (
+    "fmt"
+    "sync"
+)
+
+type Container struct {
+    counters map[string]int
+    mu       sync.Mutex
+}
+
+
+func (c *Container) inc(name string) {
+
+    c.mu.Lock()
+    defer c.mu.Unlock()
+    c.counters[name] +=100
+}
+
+
+func sync_map() {
+    var m sync.Map
+
+    m.Store(2, "b")
+    v, ok := m.LoadOrStore(1, "a")
+    v2, ok2 := m.Load(1)
+    assert(v == "a")
+    assert(!ok)
+    assert(v2 == "a")
+    assert(ok2)
+    fmt.Println(v, ok, v2, ok2)
+    fmt.Println(m)
+    m.Delete(2)
+    v3, _ := m.Load(2)
+    fmt.Println(m, v3)
+    assert(v3 == nil)
+    
+
+}
+
+
+func main() {
+
+    sync_map()
+
+    /*
+    c := Container{
+
+        counters: map[string]int{"a": 0, "b": 0},
+    }
+    c.inc("aaa")
+
+    go c.inc("aaa")
+
+
+    fmt.Println(c.counters)
+    for i := 0; i < 10000; i++ {
+        
+    }
+    fmt.Println(c.counters)
+
+    fmt.Println()
+    */
+}

@@ -1,0 +1,131 @@
+package main
+
+
+func a() bool {
+    s := []int{8,8}
+    s[1] -= 9
+    k := s[1] == -1
+    return k
+}
+
+func f2() {
+    var j int
+    var s = []int{10, 20}
+    var s2 = []int{100, 200}
+    for _, v := range s {
+        j += v
+        for _, v2 := range s2{
+            j += v2
+            for _, v := range s {
+                j += v
+            }
+        }
+    }
+    assert(j == 750)
+}
+
+
+func slice_slice() {
+    s := []int{1,2,3,4}
+    s1 := s[:1]
+    assert(len(s1) == 1)
+    assert(cap(s1) == 4)
+
+    s2 := s[1:]
+    assert(len(s2) == 3)
+    assert(cap(s2) == 3)
+
+    s3 := s[1:2:2]
+    assert(s3[0] == 2)
+    assert(len(s3) == 1)
+    assert(cap(s3) == 1)
+
+    s4 := s[1:2:3]
+    assert(cap(s4) == 2)
+
+    // index out of range
+    //s4 = s[1:2:11]
+    //assert(cap(s4) == 10)
+}
+
+func append_slice() {
+    m := []byte{1,3}
+    n := []byte{2,4}
+    t := append(m, n...)
+    assert(t[0] == 1)
+    assert(t[2] == 2)
+
+    s := "what"
+    s1 := append(m, s...)
+    assert(s1[2] == 'w')
+    assert(s1[3] == 'h')
+    assert(s1[4] == 'a')
+    assert(s1[5] == 't')
+}
+
+func copy_slice() {
+    m := []byte{1,2,3,4}
+    n := []byte{66,77}
+    t := m[1:4]
+    count := copy(t, n)
+    assert(count == 2)
+    assert(t[0] == 66)
+    assert(t[1] == 77)
+    assert(t[2] == 4)
+
+    t2 := m[:1]
+    count = copy(t2, n)
+    assert(count == 1)
+     assert(t2[0] == 66)
+    assert(t2[1] == 66)
+    assert(t2[2] == 77)
+
+    count = copy(t2, "what")
+    assert(count == 1)
+    assert(t2[0] == 'w')
+    assert(t2[1] == 66)
+}
+
+
+
+func copy_no_return() {
+	s := "/a"
+   	buf := make([]byte, 3)
+	copy(buf, s[:1])
+	assert(buf[0] == '/')
+ }
+
+
+func appendToNil() {
+    var a []int
+    b := []int{6,6,6}
+    a = append(a, b...)
+    a[0] = 123
+    assert(a[0] == 123)
+    assert(b[0] == 6)
+}
+
+
+
+func main() {
+    var s1 = [][]int{{0},{99},{2}}
+    var s2 = []int{0,100,2}
+    i := s1[1][0] + s2[1] - 1
+    s2[0] = 8
+    j := s2[0]
+    assert(i == 198)
+    assert(j == 8)
+    assert(a())
+
+    f2()
+
+    slice_slice()
+
+    append_slice()
+
+    copy_slice()
+
+    copy_no_return()
+
+    appendToNil()
+}
