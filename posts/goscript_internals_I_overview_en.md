@@ -45,7 +45,7 @@ package, main, var, a, EQL, 1, ...
 `
 ```
 
-- A hand-written [recursive decendent](https://en.wikipedia.org/wiki/Recursive_descent_parser) parser ([parser.rs](https://github.com/oxfeeefeee/goscript/blob/master/parser/src/parser.rs)) turns the list of tokens into a tree. This step might look magical, but in fact quite intuitive, it's just a recursive program, that try to build nodes of different types of statements and expressions, by matching the tokens it sees and the tokens it expects. The tree definition can be found here ([ast.rs](https://github.com/oxfeeefeee/goscript/blob/master/parser/src/ast.rs)). The AST of the above program would be something like this:
+- A hand-written [recursive descent](https://en.wikipedia.org/wiki/Recursive_descent_parser) parser ([parser.rs](https://github.com/oxfeeefeee/goscript/blob/master/parser/src/parser.rs)) turns the list of tokens into a tree. This step might look magical, but in fact quite intuitive, it's just a recursive program, that try to build nodes of different types of statements and expressions, by matching the tokens it sees and the tokens it expects. The tree definition can be found here ([ast.rs](https://github.com/oxfeeefeee/goscript/blob/master/parser/src/ast.rs)). The AST of the above program would be something like this:
     ![ast](/images/ast.jpeg)
 
 ### The type checker
