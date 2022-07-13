@@ -1,1 +1,0 @@
-{"pageProps":{"postData":{"id":"goscript_internals_II_the_virtual_machine_design_b","contentHtml":"<h2>Interface</h2>\n<h2>Goroutine and cucurrency</h2>\n<h2>Channel and select</h2>\n<h2>Deferred calls, panic and recovery</h2>\n<h2>FFI and libraries</h2>\n","title":"Goscript Internals II: The Virtual Machine Design, part B"}},"__N_SSG":true}
