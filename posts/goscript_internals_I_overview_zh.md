@@ -1,6 +1,6 @@
 ---
 title: 'Goscript 设计原理一: 总览'
-date: '2022-07-05'
+date: '2022-07-04'
 translation: 'goscript_internals_I_overview_en'
 translation_lang: 'English'
 ---

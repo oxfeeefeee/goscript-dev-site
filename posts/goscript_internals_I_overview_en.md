@@ -1,5 +1,5 @@
 ---
-title: 'Goscript Internals I: Overview ' 
+title: 'Goscript Internals I: Overview' 
 date: '2022-07-04'
 translation: 'goscript_internals_I_overview_zh'
 translation_lang: '中文'
@@ -133,21 +133,21 @@ Below is the generated code, the instructions are numbered to make it easier to 
 ```go
 `
 main:
-1    DUPLICATE       |1 |-9 |... |... |...,
-2    DUPLICATE       |2 |-10 |... |... |...,
-3    LOAD_PKG        |3 |-11 |1 |... |...,
+1    DUPLICATE       |1 |-3 |... |... |...,
+2    DUPLICATE       |2 |-4 |... |... |...,
+3    LOAD_PKG        |3 |-1 |1 |... |...,
 4    CALL            |3 |0 |... |FlagA |...,
-5    DUPLICATE       |5 |-12 |... |... |...,
-6    DUPLICATE       |6 |-13 |... |... |...,
-7    LOAD_PKG        |7 |-14 |2 |... |...,
+5    DUPLICATE       |5 |-3 |... |... |...,
+6    DUPLICATE       |6 |-4 |... |... |...,
+7    LOAD_PKG        |7 |-1 |2 |... |...,
 8    CALL            |7 |4 |... |FlagA |...,
 9    EQL             |8 |0 |4 |Int |Int,
 10   ASSERT          |... |8 |... |... |...,
 11   RETURN          |... |... |... |FlagA |...,
 
 addN:
-12   DUPLICATE       |3 |-7 |... |... |...,
-13   DUPLICATE       |4 |-8 |... |... |...,
+12   DUPLICATE       |3 |-5 |... |... |...,
+13   DUPLICATE       |4 |-5 |... |... |...,
 14   LSS             |5 |4 |2 |Int |...,
 15   JUMP_IF_NOT     |3 |5 |... |... |...,
 16   ADD_ASSIGN      |3 |1 |... |Int |...,

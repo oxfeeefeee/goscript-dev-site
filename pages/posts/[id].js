@@ -32,7 +32,7 @@ export default function Post({ postData }) {
                 {typeof postData.translation === "string" ?
                     <div className={utilStyles.lightText}>
                         <a href="https://github.com/oxfeeefeee/">oxfeeefeee</a>
-                        {' '}<Date dateString={postData.date} />{' //'}
+                        {' '}<a>{postData.date}</a>{' //'}
                         {postData.translation &&
                             <Link href={`/posts/${postData.translation}`}>
                                 <a>{postData.translation_lang}</a>
@@ -41,7 +41,7 @@ export default function Post({ postData }) {
                     </div>
                     : <div className={utilStyles.lightText}>
                         <a href="https://github.com/oxfeeefeee/">oxfeeefeee</a>
-                        {' '}{postData.date}
+                        {' '}<a>{postData.date}</a>
                     </div>
                 }
                 <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
