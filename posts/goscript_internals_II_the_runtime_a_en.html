@@ -220,7 +220,8 @@
                         <p>In Goscript, for every goroutine a processing loop is launched, which is an async function,
                             and an await can happen at any point inside the loop. Async Rust functions can also be
                             called inside the loop via Goscript FFI.</p>
-                        <p>To be cooperative, the loop yields after a certain amount of instructions are processed.</p>
+                        <p>The loop yields after a certain amount of instructions are processed, so that the users don't need to
+                             call yield explicitly making the whole system preemptive</p>
                         <p>With the help of Rust's async-await, we have a simple solution behind a powerful feature.
                             It's easier to understand from a different perspective: a goroutine is just a Rust future.
                         </p>
