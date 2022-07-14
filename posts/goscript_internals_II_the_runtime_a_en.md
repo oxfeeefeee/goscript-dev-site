@@ -64,7 +64,7 @@ Last but not least, the virtual registers. As the diagram shows, when a function
 For every step, the processing loop does the following:
 Fetch the instruction that the PC of the active call frame on the top of the call stack points to, and process it. Then the PC is either increased by 1, or modified to perform a jump. If the instruction is a CALL / RETURN, the active call frame is changed.
 
-This is when `m * n` of `mul` is being processed after `addN` returned and `mul` is callded:
+This is when `m * n` of `mul` is being processed after `addN` returned and `mul` is called:
     ![vm_mul](/images/vm_mul.jpeg)
 
 ## Upvalue
