@@ -7,7 +7,7 @@ translation_lang: '中文'
 
 ## Introduction
 
-Goscript is a VM-based Golang implementation written in Rust. Goscript Internals will be a series of articles explaining Goscript's design. The intended audience are any experienced programmers who are interested in how Goscipt works--or, more generally--how a compiler/ a scripting language/ a Go implementation works. You don't need to have a background in compilers, Go or Rust but it does help if you do. This first article is a brief introduction of how a typed scripting language works, which may be boring to experts.
+Goscript is a VM-based Golang implementation written in Rust. Goscript Internals will be a series of articles explaining Goscript's design. The intended audience are any experienced programmers who are interested in how Goscript works--or, more generally--how a compiler/ a scripting language/ a Go implementation works. You don't need to have a background in compilers, Go or Rust but it does help if you do. This first article is a brief introduction of how a typed scripting language works, which may be boring to experts.
 
 Before we dive in, let's make a table of all the sub-projects:
 | Project |                 Description | Language | Credit |

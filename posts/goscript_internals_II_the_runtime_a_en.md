@@ -7,9 +7,9 @@ date: '2022-07-14'
 
 The [previous overview](https://goscript.dev/posts/goscript_internals_I_overview_en) promised a "relatively original wheel", however the runtime is in fact more like a cocktail. Most of the ingredients are from Lua, Python Go and Rust.
 
-* The VM and instruction design is inspired by Lua. Like Lua, Goscirpt has a register-based VM, and it also uses "upvalue" to support closure.
+* The VM and instruction design is inspired by Lua. Like Lua, Goscript has a register-based VM, and it also uses "upvalue" to support closure.
 
-* The memory management and GC is similar to Python's. Goscirpt uses reference counting and circular reference detection to reclaim memory.
+* The memory management and GC is similar to Python's. Goscript uses reference counting and circular reference detection to reclaim memory.
 
 * To behave exactly like the official version of Go, the data structures have to simulate how they work originally, things like Interface and Slice.
 
