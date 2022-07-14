@@ -60,7 +60,7 @@ This diagram shows what's in the memory when <code>total += m</code> of <code>ad
 <p>Last but not least, the virtual registers. As the diagram shows, when a function is called, a set of virtual registers are allocated for it in the following order: <code>return value</code>, <code>arguments</code>, <code>local vars</code>, <code>temporary vars</code>. Registers and consts are the only two places where instructions can read from, and registers are the only place to write to.</p>
 <p>For every step, the processing loop does the following:
 Fetch the instruction that the PC of the active call frame on the top of the call stack points to, and process it. Then the PC is either increased by 1, or modified to perform a jump. If the instruction is a CALL / RETURN, the active call frame is changed.</p>
-<p>This is when <code>m * n</code> of <code>mul</code> is being processed after <code>addN</code> returned and <code>mul</code> is callded:
+<p>This is when <code>m * n</code> of <code>mul</code> is being processed after <code>addN</code> returned and <code>mul</code> is called:
 <img src="/images/vm_mul.jpeg" alt="vm_mul"></p>
 <h2>Upvalue</h2>
 <p>"The combination of lexical scoping with first-class functions creates a well-known difficulty for accessing outer local variables". -- <a href="https://www.lua.org/doc/sblp2005.pdf">《The Implementation of Lua 5.0》</a>. Goscript steals the solution from Lua as it faces the same problem.</p>
