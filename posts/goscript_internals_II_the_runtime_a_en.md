@@ -126,7 +126,7 @@ In terms of how coroutines cooperate with each other, there are:
 
 * Cooperative coroutines, meaning coroutines runs indefinitely until they explicitly yield.
 
-Go has a stackful cooperative coroutine system, which is also the most user friendly.
+Go has a stackful preemptive coroutine system, which is also the most user friendly.
 
 In Goscript, for every goroutine a processing loop is launched, which is an async function, and an await can happen at any point inside the loop. Async Rust functions can also be called inside the loop via Goscript FFI.
 
