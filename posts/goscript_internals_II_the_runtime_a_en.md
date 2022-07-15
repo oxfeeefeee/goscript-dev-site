@@ -96,7 +96,7 @@ Let's focus on `add42 := makeAdd(42)`, typically, when makeAdd returns, the argu
 
 The design of upvalue is relatively simple. When `makeAdd` is not returned yet, the upvalue is just the address of `up` in the virtual registers, so both the outer and the inner function can access it from the register. When `makeAdd` returns, the value of `up` get copied to the heap, and the upvalue becomes a real pointer pointing to the heap value.
 
-The upvalue is `open` when `up` is still in the register, the upvalue is `closed` when `up` in in the heap.
+The upvalue is `open` when `up` is still in the register, the upvalue is `closed` when `up` is in the heap.
 
 ## Pointer
 
@@ -109,7 +109,7 @@ There is no VM-based language supports pointers as far as I know, but Goscript h
 * slice member
 * struct field
 
-In Goscript, package, slice and struct are all stored in the heap, and we have real pointers that point to them, so a combination of `(pointer, member_index)` is sufficient to represent the those three. For local variable, a pointer to it behaves exactly the same as an upvalue, so it is implemented as an upvalue.
+In Goscript, package, slice and struct are all stored in the heap, and we have real pointers that point to them, so a combination of `(pointer, member_index)` is sufficient to represent those three. For local variable, a pointer to it behaves exactly the same as an upvalue, so it is implemented as an upvalue.
 
 ## Goroutine
 
@@ -130,7 +130,7 @@ Go has a stackful preemptive coroutine system, which is also the most user frien
 
 In Goscript, for every goroutine a processing loop is launched, which is an async function, and an await can happen at any point inside the loop. Async Rust functions can also be called inside the loop via Goscript FFI.
 
-To be cooperative, the loop yields after a certain amount of instructions are processed.
+The loop yields after a certain amount of instructions are processed, so that the users don't need to call yield explicitly, making the whole system preemptive.
 
 With the help of Rust's async-await, we have a simple solution behind a powerful feature. It's easier to understand from a different perspective: a goroutine is just a Rust future.
 
