@@ -1,0 +1,14 @@
+{
+  "name": "goscript-playground",
+  "version": "0.1.0",
+  "files": [
+    "goscript_playground_bg.wasm",
+    "goscript_playground.js",
+    "goscript_playground.d.ts"
+  ],
+  "module": "goscript_playground.js",
+  "types": "goscript_playground.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

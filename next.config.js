@@ -1,3 +1,6 @@
+
+const isProd = process.env.NODE_ENV === 'production'
+
 module.exports = {
     webpack: (config, { isServer }) => {
         // Enable WebAssembly as an experimental feature
@@ -5,8 +8,9 @@ module.exports = {
 
         return config;
     },
+
+    assetPrefix: isProd ? '/goscript-dev-site/' : '',
     images: {
-        loader: 'akamai',
-        path: '',
+        unoptimized: true,
     },
 }
